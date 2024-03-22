@@ -10,8 +10,8 @@ from Game.gameSettings import HP, LEFTBORDER, RIGHTBORDER, LEFTSTART, RIGHTSTART
 # SECONDARY CAN BE : Hadoken, Grenade, Boomerang, Bear Trap
 
 # TODO FOR PARTICIPANT: Set primary and secondary skill here
-PRIMARY_SKILL = SuperArmorSkill
-SECONDARY_SKILL = Hadoken
+PRIMARY_SKILL = UppercutSkill
+SECONDARY_SKILL = SuperSaiyanSkill
 
 #constants, for easier move return
 #movements
@@ -52,7 +52,7 @@ class Script:
         x_distance = get_distance(player, enemy)
         y_distance = abs(get_pos(player)[1] - get_pos(enemy)[1])
 
-        # If the enemy has uppercut that's not on cooldown, evade them
+        # If the enemy also has uppercut that's not on cooldown, evade them
         if not primary_on_cooldown(enemy) and get_primary_skill(enemy) == "uppercut":
             # We're in uppercut range from both sides, move away
             if x_distance == 1:
@@ -60,22 +60,22 @@ class Script:
             elif x_distance == -1:
                 return FORWARD
 
-        # Turn Super Saiyan - Damage 2X
-        if not primary_on_cooldown(player):
-            return PRIMARY
+        # Turn on UppercutSkil -
+        if not secondary_on_cooldown(player):
+            return SECONDARY
         
         # If not on cooldown and travel range less than or equal to range of Hadoken, activate Hadoken
-        if not secondary_on_cooldown(player) and abs(x_distance) <= seco_range(player) and y_distance == 0:
-            return SECONDARY     
+        if not primary_on_cooldown(player) and abs(x_distance) <= prim_range(player) and y_distance <= 1:
+            return PRIMARY 
         
         # Enemy is out of range, chase them
         # Enemy is behind us, move back
         elif x_distance > 0:
-            return BACK
+            return FORWARD
         
         # Enemy is forward of us, move forward.
         elif x_distance < 0:
-            return FORWARD
+            return BACK
 
 
         # IF ENEMY IS STUNNED, SAFE TO MOVE IN.
@@ -86,9 +86,9 @@ class Script:
         
         # If we're lower health than the enemy
         if get_hp(enemy) > get_hp(player) and x_distance < -1:
-            return FORWARD
-        if get_hp(enemy) > get_hp(player) and x_distance > 1:
             return BACK
+        if get_hp(enemy) > get_hp(player) and x_distance > 1:
+            return FORWARD
             
         # COMBO ATTACK 
         if get_last_move(player) == "light" and get_past_move(player, 2) == "light":
@@ -100,8 +100,8 @@ class Script:
                 return LIGHT
             # Not in range, move forward
             elif x_distance < -1:
-                return FORWARD
+                return BACK
             # Not in range, move backwards
             elif x_distance > 1:
-                return BACK
+                return FORWARD
         

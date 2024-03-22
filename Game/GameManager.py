@@ -15,7 +15,7 @@ from Game.PlayerConfigs import Player_Controller
 
 # Manually choose bot files to test
 SUBMISSIONPATH = "Submissions"
-PATH1 = "Bot1"
+PATH1 = "Bot2"
 PATH2 = "Bot3"
 
 # Get scripts from bot files and return as script objects
