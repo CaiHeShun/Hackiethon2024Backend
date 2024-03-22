@@ -35,7 +35,7 @@ NOMOVE = "NoMove"
 # for testing
 moves = SECONDARY,
 moves_iter = iter(moves)
-
+        
 # TODO FOR PARTICIPANT: WRITE YOUR WINNING BOT
 class Script:
     def __init__(self):
@@ -56,4 +56,3 @@ class Script:
             return LIGHT
         
         return FORWARD
-        

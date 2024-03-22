@@ -10,7 +10,7 @@ from Game.gameSettings import HP, LEFTBORDER, RIGHTBORDER, LEFTSTART, RIGHTSTART
 # SECONDARY CAN BE : Hadoken, Grenade, Boomerang, Bear Trap
 
 # TODO FOR PARTICIPANT: Set primary and secondary skill here
-PRIMARY_SKILL = SuperArmorSkill
+PRIMARY_SKILL = TeleportSkill
 SECONDARY_SKILL = Hadoken
 
 #constants, for easier move return
@@ -35,7 +35,7 @@ NOMOVE = "NoMove"
 # for testing
 moves = SECONDARY,
 moves_iter = iter(moves)
-            
+
 # TODO FOR PARTICIPANT: WRITE YOUR WINNING BOT
 class Script:
     def __init__(self):

@@ -35,7 +35,7 @@ NOMOVE = "NoMove"
 # for testing
 moves = SECONDARY,
 moves_iter = iter(moves)
-
+        
 # TODO FOR PARTICIPANT: WRITE YOUR WINNING BOT
 class Script:
     def __init__(self):
@@ -48,10 +48,9 @@ class Script:
     
     # MAIN FUNCTION that returns a single move to the game manager
     def get_move(self, player, enemy, player_projectiles, enemy_projectiles):
+        
         distance = abs(get_pos(player)[0] - get_pos(enemy)[0])
-
         if distance < 3:
             return LIGHT
         
         return FORWARD
-        
