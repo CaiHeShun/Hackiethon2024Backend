@@ -50,21 +50,18 @@ class Script:
 
         distance = get_distance(player, enemy)
         x_distance = get_pos(player)[0] - get_pos(enemy)[0]
-
-        print(distance)
-        print(x_distance)
         y_distance = abs(get_pos(player)[1] - get_pos(enemy)[1])
 
         # If meditate is not on cooldown, and our player is less than 80 HP.
         if not primary_on_cooldown(player) and get_hp(player) <= 80:
             return PRIMARY
-
-        # If Hadoken is not on cooldown, and enemy is within 6 units, and not airborne
-        if not secondary_on_cooldown(player) and (distance < 6) and y_distance == 0:
+        
+        # Hadoken is not on cooldown, activate it
+        if not secondary_on_cooldown(player) and distance < 7 and y_distance == 0:
             return SECONDARY
         
         # If Hadoken is on cooldown, decide between a HEAVY ATTACK or moving away
-        elif secondary_on_cooldown(player) and (distance <= 1) and y_distance == 0:
+        if distance <= 1 and y_distance == 0:
             if get_last_move(player) == "light" and get_past_move(player, 2) == "light":
                 if get_block_status(enemy) == 0:
                     return HEAVY
@@ -73,16 +70,13 @@ class Script:
                 else:
                     return FORWARD
             # If Hadoken is on cooldown, decide between a LIGHT ATTACK or moving away
-            elif get_last_move(player) == "light" and get_past_move(player, 2) != "light":
+            elif (get_last_move(player) == "light" and get_past_move(player, 2) != "light") or get_last_move(player) == "move":
                 if get_block_status(enemy) == 0:
                     return LIGHT
                 elif get_block_status(enemy) > 0 and x_distance > 0:
                     return BACK
                 else:
                     return FORWARD
-            
-            elif get_last_move(player) == "move":
-                
         
         # If Hadoken is on cooldown, and enemy is not within 1 unit, retreat either forward or backwards.
         elif distance > 1 and y_distance == 0:
@@ -90,6 +84,9 @@ class Script:
                 return FORWARD
             else:
                 return BACK
+        
+        else:
+            return BACK
 
 
      
